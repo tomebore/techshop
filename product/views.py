@@ -1,5 +1,8 @@
-from django.shortcuts import render , HttpResponse
+from django.shortcuts import render 
+from product.models import *
 
 # Create your views here.
 def products(request):
-    return HttpResponse(" <h1> список товаров </h1>")
+    context = {}
+    context["products"] =  Product.objects.filter(aviable=True)
+    return render(request , "product/products.html", context)
