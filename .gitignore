@@ -102,7 +102,7 @@ __pycache__/
 
 .env
 db.sqlite3
-media
-static
+media/*
+static/*
 *.pyc
-techshop/settings.py
+*/settings.py
