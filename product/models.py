@@ -33,7 +33,7 @@ class Product(models.Model):
     salse =models.IntegerField(
         default = 0 , verbose_name = "Кол-во продаж")
 
-    aviable = models.BooleanField(
+    available = models.BooleanField(
         default = True, verbose_name = "Есть в наличии")
 
 
