@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3> {{ request.user.username }}</h3>
+    <h3> {{ user.username }}</h3>
     <ul>
-        <li> {{ request.user.username }}</li>
-        <li> {{ request.user.email }}</li>
-        <li> {{ request.user.get_full_name }}</li>
-        <li> {{ request.user.product.count }}</li>
+        <li> Логин :{{ user.username }}</li>
+        <li> Email :{{ user.email }}</li>
+        <li> ФИО :{{ user.get_full_name }}</li>
+        <li> Количество товара :{{ user.product.count }}</li>
     </ul>
-    <h4></h4>
+    <h4>Товары этого пользователя </h4>
     {% include 'includes/products.html' %}
 {% endblock %}
