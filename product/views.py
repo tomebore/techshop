@@ -11,12 +11,16 @@ def products(request):
         word = request.GET.get("query")
         context["products"] = Product.objects.filter(
             Q(available=True),
+            Q(deleted=False),
             Q(name__contains=word)|
             Q(description__contains=word)|
             Q(category__name__contains=word)
         )
     else:
-        context["products"] = Product.objects.filter(available=True)
+        context["products"] = Product.objects.filter(
+            available=True,
+            deleted=False
+            )
     return render(request , "product/products.html", context)
 
 def product(request ,id):
@@ -32,7 +36,10 @@ def product_create(request):
             new_product = form.save()
             new_product.user = request.user
             new_product.save()
-            context["products"] = Product.objects.filter(available=True)
+            context["products"] = Product.objects.filter(
+                available=True,
+                deleted=False
+                )
             context["message"] = "Товар был успешно добавлен"
             return redirect(products)
     
@@ -60,3 +67,19 @@ def product_edit(request , id):
     context["form"] = ProductForm(instance=product)
 
     return render(request,"product/form.html", context)
+
+
+@login_required(login_url='/login/')
+def product_delete(request,id):
+    product = Product.objects.get(id=id)
+    context = {}
+
+    if product.user != request.user:
+        context["message"] = "У вас нет доступа"
+    else:
+        product.deleted = True
+        product.save()
+        context["message"] = "Товар был удалён"
+
+    context["type"] = "danger"
+    return render(request , "core/message.html", context)

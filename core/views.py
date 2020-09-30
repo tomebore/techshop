@@ -47,5 +47,5 @@ def registration(request):
 @login_required(login_url="/login/")
 def profile(request):
     context = {}
-    context["products"] = Product.objects.filter(available=True ,user=request.user)
+    context["products"] = Product.objects.filter(user=request.user)
     return render(request,"core/profile.html", context)
